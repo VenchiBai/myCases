@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Collided Square</title>
+	<!-- 拖拽+碰撞+重力 -->
+	<style type="text/css">
+		span{
+			font-family: "Microsoft YaHei","微软雅黑";
+			font-size: 16px;
+			text-align: center;
+			padding: 10px 0;
+			color: #000;
+			width: 100%;
+			display: block;
+			background-color: #ccc;
+		}
+		div{
+			width: 80px;
+			height: 80px;
+			background-color: red;
+			position: absolute;
+		}
+
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var div1=document.getElementById('div1');
+			var btn1=document.getElementsByTagName('input')[0];
+			var lastX=0;
+			var lastY=0;
+
+			div1.onmousedown=function(e){
+				var ev=e||event;
+				var disX=ev.clientX-div1.offsetLeft;
+				var disY=ev.clientY-div1.offsetTop;
+				document.onmousemove=function(e){
+					var ev=e||event;
+					var l=ev.clientX-disX;
+					var t=ev.clientY-disY;
+					div1.style.left=l+'px';
+					div1.style.top=t+'px';
+
+					speedX=l-lastX;
+					speedY=t-lastY;
+					lastX=l;
+					lastY=t;
+				}
+				document.onmouseup=function(){
+					document.onmousemove=null;
+					document.onmouseup=null;
+					move();
+				}
+				clearInterval(timer);
+			}
+			
+
+		}
+		var speedX=0;
+		var speedY=0;
+		var timer=null;
+		
+		function move(){
+			clearInterval(timer);
+			timer=setInterval(function(){
+				speedY+=3;
+				var l=div1.offsetLeft+speedX;
+				var t=div1.offsetTop+speedY;
+				
+
+				if(l>=document.documentElement.clientWidth-div1.offsetWidth){
+					speedX*=-1;
+					l=document.documentElement.clientWidth-div1.offsetWidth;
+				}
+				if(t>=document.documentElement.clientHeight-div1.offsetHeight){
+					speedY*=-0.8;
+					speedX*=0.8;
+					t=document.documentElement.clientHeight-div1.offsetHeight;
+				}
+				if(l<=0){
+					speedX*=-1;
+					l=0;
+				}
+				if(t<=0){
+					speedY*=-1;
+					t=0;
+				}
+				if(Math.abs(speedX)<1){
+					speedX=0;
+				}
+				if(Math.abs(speedY)<1){
+					speedY=0;
+				}
+				if(speedX==0&&speedY==0&&t==document.documentElement.clientHeight-div1.offsetHeight){
+					clearInterval(timer);
+				}else{
+					div1.style.left=l+'px';
+					div1.style.top=t+'px';
+				}
+				
+			},30);
+			
+		}
+		
+	</script>
+</head>
+<body>
+
+<span>拖动方块再松开试试吧</span>
+<div id="div1"></div>
+</body>
+</html>
