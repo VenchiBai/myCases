@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body{margin: 0}
+		#div1{
+			width: 100%;
+			position: absolute;
+			bottom: 0;
+			text-align: center;
+		}
+		
+	</style>
+	<script type="text/javascript">			
+			document.onmousemove=function(e){
+				var div1=document.getElementById('div1');
+				var imgs=div1.getElementsByTagName('img');
+				var ev=event||e;
+				for(var i=0;i<imgs.length;i++){
+					var x=ev.clientX-(imgs[i].offsetLeft+imgs[i].offsetWidth/2);
+					var y=ev.clientY-(imgs[i].offsetTop+div1.offsetTop+imgs[i].offsetHeight/2);
+					var scale=1-Math.sqrt(x*x+y*y)/300;
+					if(scale<=0.5){scale=0.5;}
+					imgs[i].width=scale*128;
+				}
+			}
+		
+	</script>
+</head>
+<body>
+<div id="div1">
+	<img src="images/1.png" width="64">
+	<img src="images/2.png" width="64">
+	<img src="images/3.png" width="64">
+	<img src="images/4.png" width="64">
+	<img src="images/5.png" width="64">
+</div>
+</body>
+</html>
