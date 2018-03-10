@@ -1,0 +1,87 @@
+
+
+
+.icon_list a{
+	margin-left: 35px;
+}
+/*焦点图*/
+.b_text{
+	float: right;
+	width: 48%;
+}
+.b_img{
+	float: left;
+	width: 48%;
+}
+/*按钮组*/
+.btns a{
+	width: 15.5%;
+	margin-left: 1%;
+}
+/*banner斜切*/
+.banner1,.banner2{
+	height: 250px;
+	background-size: 100% 250px;
+}
+.tri_l{
+	right: -144px;
+	border-width:250px 0 0 144px;
+}
+.tri_r{
+	left: -144px;
+	border-width:250px 144px 0 0;
+}
+.tit_text h4{
+	font-size: 30px;
+	line-height: 50px;
+}
+.tit_text p{
+	font-size: 18px;
+	line-height: 30px;
+}
+
+/*产品列表*/
+.item{
+	width: 47%;
+	margin:1%;
+	box-sizing: border-box;
+	display: inline-block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*公共样式*/
+
+
+
+
+
+
+
+
+
