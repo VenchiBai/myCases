@@ -3,5 +3,6 @@
 *  [拖拽的弹性小盒子](https://venchibai.github.io/myCases/CollidedSquare/index.html)<br>
 *  [照片墙](https://venchibai.github.io/myCases/PhotoWall/index.html)<br>
 *  [苹果动态菜单](https://venchibai.github.io/myCases/appleMenu/index.html)<br>
+*  [轮播图1](https://venchibai.github.io/myCases/slidesPics/index.html)<br>
 ### 响应式作品
 *  [原生代码编写的响应式静态网页](https://venchibai.github.io/myCases/mall-responsive/index.html)<br>
