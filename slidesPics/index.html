@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="js/move.js"></script>
+	<script type="text/javascript">
+		
+
+
+        function getClass(oparent,sclass){
+            var al=document.getElementsByTagName('*');
+            var result=[];
+            for(var i=0;i<al.length;i++){
+                if(al[i].className==sclass){
+                    result.push(al[i]);
+                }
+            }
+            return result;
+        }
+		 window.onload=function(){
+            var odiv=document.getElementById('playimages');
+            var oprev=getClass(odiv,'prev')[0];
+            var onext=getClass(odiv,'next')[0];
+            var mark_left=getClass(odiv,'mark_left')[0];
+            var mark_right=getClass(odiv,'mark_right')[0];
+
+            var bigUl=getClass(odiv,'big_pic')[0];
+            var small_pic=getClass(odiv,'small_pic')[0];
+            //var bigUl=big_pic.getElementsByTagName('ul')[0];
+            var smallUl=small_pic.getElementsByTagName('ul')[0];
+            var bigli=bigUl.getElementsByTagName('li');
+            var smallli=smallUl.getElementsByTagName('li');
+            var now_index=0;
+            var minzIndex=2;
+             var timer=null;
+            smallUl.style.width=smallli.length*smallli[0].offsetWidth+'px';
+            
+            // 1.左右prev next 移入移出 淡入淡出
+            mark_left.onmouseover=oprev.onmouseover=function(){
+                startMove(oprev,'opacity',100);
+            }
+            mark_left.onmouseout=oprev.onmouseout=function(){
+                startMove(oprev,'opacity',0);
+            }
+            mark_right.onmouseover=onext.onmouseover=function(){
+                startMove(onext,'opacity',100);
+            }
+            mark_right.onmouseout=onext.onmouseout=function(){
+                startMove(onext,'opacity',0);
+            }
+            /*
+            2.下部 小图点击，大图显示
+            小图移入移出透明度改变-->当前小图移出后透明度不变（100%）（li.index)-->
+            对应大图的zindex++;高度从0到offsetHeight 变化
+            3.被点击小图居中
+            小图可左右滑动  并显示大图
+            同一张图不重复下拉
+            4.左右按钮和自动播放
+            */
+            for(var i=0;i<smallli.length;i++){
+                smallli[i].index=i;
+                smallli[i].onmouseover=function(){
+                    stopPlay();
+                    clearInterval(timer);
+                    startMove(this,'opacity',100);
+                }
+                smallli[i].onmouseout=function(){
+                    startPlay();
+                    if(this.index!=now_index){
+                        startMove(this,'opacity',60); 
+                    }
+                   
+                }
+                smallli[i].onclick=function(){
+                   
+                    if(this.index==now_index){return}
+                    now_index=this.index;
+
+                    tab();       
+                }
+            }
+            function tab(){
+               
+                    bigli[now_index].style.zIndex=minzIndex++;
+                    bigli[now_index].style.height=0;
+                    startMove(bigli[now_index],'height',bigUl.offsetHeight);
+                    for(var i=0;i<smallli.length;i++){
+                        startMove(smallli[i], 'opacity', 60);
+                    }
+                    startMove(smallli[now_index], 'opacity', 100);
+                    if(now_index==0){
+                        startMove(smallUl,'left',0);
+                    }else if(now_index==smallli.length-1){
+                        startMove(smallUl,'left',-(now_index-2)*smallli[0].offsetWidth);
+                        
+                    }else{
+                       startMove(smallUl,'left',-(now_index-1)*smallli[0].offsetWidth);
+                    }
+            }
+            oprev.onclick=function(){
+                now_index--;
+                if(now_index==-1){
+                    now_index=smallli.length-1;
+                }
+                tab();
+            }
+            onext.onclick=function(){
+                now_index++;
+                if(now_index==smallli.length){
+                    now_index=0;
+                }
+                tab();
+            }
+           function startPlay(){
+                timer=setInterval(function(){
+                    now_index++;
+                    if(now_index==smallli.length){
+                        now_index=0;
+                    }
+                    tab();
+                },2000);
+           }
+           startPlay();
+            function stopPlay(){
+                clearInterval(timer);
+            }
+
+        }
+	</script>
+</head>
+<body>
+<div id="playimages" class="play">
+    <ul class="big_pic">
+		<div class="prev"></div>
+		<div class="next"></div>
+
+		<div class="text">加载图片说明……</div>
+		<div class="length">计算图片数量……</div>
+		
+		<a class="mark_left" href="javascript:;"></a>
+		<a class="mark_right" href="javascript:;"></a>
+		<div class="bg"></div>
+		
+        <li style="z-index:1;"><img src="images/1.jpg" /></li>
+        <li><img src="images/2.jpg" /></li>
+        <li><img src="images/3.jpg" /></li>
+        <li><img src="images/4.jpg" /></li>
+        <li><img src="images/5.jpg" /></li>
+        <li><img src="images/6.jpg" /></li>
+    </ul>
+    <div class="small_pic">
+        <ul style="width:390px;">
+            <li style="filter: 100; opacity: 1;"><img src="images/1.jpg" /></li>
+            <li><img src="images/2.jpg" /></li>
+            <li><img src="images/3.jpg" /></li>
+            <li><img src="images/4.jpg" /></li>
+            <li><img src="images/5.jpg" /></li>
+            <li><img src="images/6.jpg" /></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
